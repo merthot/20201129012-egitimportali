@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <div class="row" style="margin-top: 5rem;">
+    <div class="col-md-8">
+      Merhaba, <b>{{adsoyad}}</b>
+      <button class="btn btn-outline-info btn-sm" [routerLink]="['/grupuser']">Grup Dersleri</button>
+      <h4 style="margin-top: 1rem;">Dersler</h4>
+      <table class="table" style="margin-top: 1rem;">
+        <thead>
+          <th>Ders Adı</th>
+          <th>Kredisi</th>
+          <th>Kayıt</th>
+          <th>Güncellenme</th>
+          <th>Düzenle</th>
+          <th>Sil</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ders of dersler">
+            <td>{{ders.dersadi}}</td>
+            <td>{{ders.kredi}}</td>
+            <td>{{ders.kayTarih | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+            <td>{{ders.duzTarih | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+            <td><button class="btn btn-outline-warning" (click)="DersDuzenle(ders)">Düzenle</button></td>
+            <td><button class="btn btn-outline-danger" (click)="DersSil(ders)">Sil</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+    <div class="col-md-4">
+      <h4>Kayıt Ekle-Düzenle</h4>
+      <hr>
+      <form #frm="ngForm" (submit)="Kaydet()">
+        <div class="form-group">
+          <label>Ders Adı</label>
+          <input type="text" class="form-control" name="dersadi" [(ngModel)]="secDers.dersadi" required>
+          <input type="hidden" class="form-control" name="key" [(ngModel)]="secDers.key">
+        </div>
+        <div class="form-group">
+          <label>Kredisi</label>
+          <input type="text" class="form-control" name="kredi" [(ngModel)]="secDers.kredi" required>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Kaydet" class="btn btn-outline-success" [disabled]="frm.invalid">
+        </div>       
+      </form>
+      <button class="btn btn-outline-danger" (click)="Vazgec()">Vazgeç</button>
+      <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">
+        {{sonuc.mesaj}}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <div class="row" style="margin-top: 5rem;">
+    <div class="col-md-12">
+      <button class="btn btn-outline-primary" [routerLink]="['/ders']">Dersleri Listele</button>
+      <h4 style="margin-top: 1rem;">Grup Dersleri</h4>
+      <table class="table" style="margin-top: 1rem;">
+        <thead>
+          <th>Grup Adı</th>
+          <th>Grup Dersi</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grup of gruplar">
+            <td>{{grup.grupadi}}</td>
+            <td>{{grup.grupders}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>

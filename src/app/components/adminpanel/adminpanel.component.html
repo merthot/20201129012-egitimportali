@@ -1,0 +1,85 @@
+<div class="container mt-5">
+
+  <div class="row alert alert-danger" *ngIf="silme">
+    <div class="col-md-12">
+      <p> <b>{{secUye.adsoyad}}</b> Adlı kayıt silinecektir. Onaylıyor musunuz?</p>
+      <button class="btn btn-outline-danger btn-sm" (click)="Sil()">Evet Sil</button>
+      <button class="btn btn-outline-primary btn-sm ml-2" (click)="silme=false;">Hayır Kapat</button>
+    </div>
+  </div>
+
+  <div class="row alert alert-success" style="margin-top: 5rem;" *ngIf="detay">
+    <div class="col-md-6">
+      <h5>Ad Soyad</h5>
+      <p>{{secUye.adsoyad}}</p>
+      <h5>Mail</h5>
+      <p>{{secUye.mail}}</p>
+      <h5>Parola</h5>
+      <p>{{secUye.parola}}</p>
+    </div>
+    <div class="col-md-6">
+      <h5>Kayıt Tarihi</h5>
+      <p>{{secUye.kayTarih | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+      <h5>Düzenleme Tarihi</h5>
+      <p>{{secUye.duzTarih | date:'dd.MM.yyyy HH:mm:sss'}}</p>
+
+      <button class="btn btn-outline-danger btn-sm" (click)="detay=false;">Kapat</button>
+
+    </div>
+  </div>
+  <div class="row" style="margin-top: 5rem;" *ngIf="ekleduzenle">
+    <div class="col-md-12 alert alert-success">
+      <h4>Kayıt Ekle - Düzenle</h4>
+      <form #frm="ngForm" (submit)="Kaydet()">
+        <div class="form-group">
+          <label>Ad Soyad</label>
+          <input type="text" class="form-control" name="adsoyad" [(ngModel)]="secUye.adsoyad">
+        </div>
+        <div class="form-group">
+          <label>Mail</label>
+          <textarea class="form-control" name="mail" [(ngModel)]="secUye.mail"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Parola</label>
+          <textarea class="form-control" name="parola" [(ngModel)]="secUye.parola"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Kaydet" class="btn btn-outline-success btn-sm">
+          <button class="btn btn-outline-danger btn-sm ml-2" (click)="ekleduzenle=false;">Kapat</button>
+        </div>
+      </form>
+      <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">
+        {{sonuc.mesaj}}</div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5rem;">
+    <div class="col-md-12">
+      <h4>Kayıtlar</h4>
+      <button class="btn btn-outline-info btn-sm" (click)="ekleduzenle=true;">Kayıt Ekle</button>
+      <button class="btn btn-outline-info btn-sm" [routerLink]="['/grup']">Grup Düzenle</button>
+      <table class="table mt-2">
+        <thead>
+          <td>Ad Soyad</td>
+          <td>Detay</td>
+          <td>Düzenle</td>
+          <td>Kayıt</td>
+          <td>Sil</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let uye  of uyeler">
+            <td>{{uye.adsoyad}}</td>
+            <td><button class="btn btn-outline-info btn-sm" (click)="UyeSec(uye);detay=true;">Detay</button>
+            </td>
+            <td><button class="btn btn-outline-warning btn-sm"
+                (click)="UyeSec(uye);ekleduzenle=true;">Düzenle</button></td>
+                <button class="btn btn-outline-info btn-sm" [routerLink]="['/kayitduzenle',uye.key]"
+                >Kayıt</button>
+            <td><button class="btn btn-outline-danger btn-sm" (click)="UyeSec(uye);silme=true;">Sil</button></td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

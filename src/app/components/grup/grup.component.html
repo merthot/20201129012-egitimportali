@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <div class="row" style="margin-top: 5rem;">
+    <div class="col-md-8">
+      <button class="btn btn-outline-primary" [routerLink]="['/adminpanel']">Kayıtları Listele</button>
+      <h4 style="margin-top: 1rem;">Grup Dersleri</h4>
+      <table class="table" style="margin-top: 1rem;">
+        <thead>
+          <th>Grup Adı</th>
+          <th>Grup Dersi</th>
+          <th>Kayıt</th>
+          <th>Güncellenme</th>
+          <th>Düzenle</th>
+          <th>Sil</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grup of gruplar">
+            <td>{{grup.grupadi}}</td>
+            <td>{{grup.grupders}}</td>
+            <td>{{grup.kayTarih | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+            <td>{{grup.duzTarih | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+            <td><button class="btn btn-outline-warning" (click)="GrupDuzenle(grup)">Düzenle</button></td>
+            <td><button class="btn btn-outline-danger" (click)="GrupSil(grup)">Sil</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+    </div>
+    <div class="col-md-4">
+      <h4>Grup Ekle-Düzenle</h4>
+      <hr>
+      <form #frm="ngForm" (submit)="Kaydet()">
+        <div class="form-group">
+          <label>Grup Adı</label>
+          <input type="text" class="form-control" name="grupadi" [(ngModel)]="secGrup.grupadi" required>
+          <input type="hidden" class="form-control" name="key" [(ngModel)]="secGrup.key">
+        </div>
+        <div class="form-group">
+          <label>Grup Dersi</label>
+          <input type="text" class="form-control" name="grupders" [(ngModel)]="secGrup.grupders" required>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Kaydet" class="btn btn-outline-success" [disabled]="frm.invalid">
+        </div>       
+      </form>
+      <button class="btn btn-outline-danger" (click)="Vazgec()">Vazgeç</button>
+      <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">
+        {{sonuc.mesaj}}</div>
+    </div>
+  </div>
+</div>
